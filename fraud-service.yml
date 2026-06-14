@@ -1,2 +1,44 @@
 server:
   port: 8085
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:fintechwave_fraud}"
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+
+  data:
+    redis:
+      host: "${REDIS_HOST:localhost}"
+      port: "${REDIS_PORT:6379}"
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 1
+
+  kafka:
+    consumer:
+      group-id: fraud-service
+
+app:
+  fraud:
+    window:
+      tx-count-60s: 60
+      tx-volume-1h: 3600
+      tx-volume-24h: 86400
+      auth-fail-15m: 900
+    threshold:
+      max-tx-count-60s: 10
+      max-tx-volume-1h: 500.00
+      max-tx-volume-24h: 2000.00
+      max-auth-fail-15m: 5
+
+logging:
+  level:
+    "[com.fintechwave.fraud]": DEBUG
+    "[org.springframework.data.redis]": INFO

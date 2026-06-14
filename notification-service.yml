@@ -1,2 +1,43 @@
 server:
   port: 8086
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:fintechwave_notif}"
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  kafka:
+    consumer:
+      group-id: notification-service
+
+  mail:
+    host: "${SMTP_HOST:smtp.sendgrid.net}"
+    port: "${SMTP_PORT:587}"
+    username: "${SMTP_USERNAME:apikey}"
+    password: "${SMTP_PASSWORD:SG.placeholder}"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  notification:
+    from-email: "${NOTIFICATION_FROM_EMAIL:noreply@fintechwave.com}"
+    from-name: FintechWave
+    enabled-channels: EMAIL
+    retention-days: 90
+
+management:
+  health:
+    mail:
+      enabled: false
+
+logging:
+  level:
+    "[com.fintechwave.notification]": DEBUG
+    "[org.springframework.mail]": INFO

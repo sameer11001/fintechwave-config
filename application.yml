@@ -1,6 +1,77 @@
-shared:
-  env: local
+# ============================================================
+# SHARED — served to every microservice.
+# Do NOT put service-specific values here.
+# ============================================================
 
+# --------------- Keycloak (Platform-Wide) -------------------
+app:
+  keycloak:
+    issuer-uri: "${KEYCLOAK_EXTERNAL_URL:http://localhost:8180}/realms/fintechwave"
+    jwk-set-uri: "${KEYCLOAK_URL:http://localhost:8180}/realms/fintechwave/protocol/openid-connect/certs"
+    expected-audience: fintechwave-platform
+
+# --------------- OAuth2 Resource Server ---------------------
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${app.keycloak.issuer-uri}
+          jwk-set-uri: ${app.keycloak.jwk-set-uri}
+
+  # --------------- Kafka (Shared Cluster) -------------------
+  kafka:
+    bootstrap-servers: "${KAFKA_BOOTSTRAP:localhost:29092}"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+    listener:
+      ack-mode: MANUAL_IMMEDIATE
+
+  # --------------- JPA Defaults (all DB services) -----------
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        "[format_sql]": false
+
+  # --------------- Flyway Defaults --------------------------
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  # --------------- DataSource Defaults ----------------------
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: "${DB_USER:postgres}"
+    password: "${DB_PASS:postgres}"
+
+  # --------------- Cloud Bus (Kafka) ------------------------
+  cloud:
+    bus:
+      enabled: true
+
+# --------------- Global Error Policy ------------------------
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
+
+# --------------- Actuator -----------------------------------
 management:
   endpoint:
     health:
@@ -8,4 +79,18 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: health, info, refresh, busrefresh
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# --------------- Logging (Global Defaults) ------------------
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+  level:
+    "[org.springframework.security]": INFO
+    "[org.springframework.kafka]": INFO
+    "[org.springframework.cloud.config]": INFO
+    "[org.springframework.cloud.gateway]": INFO
+    "[com.fintechwave]": INFO
