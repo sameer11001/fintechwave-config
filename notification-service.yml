@@ -9,6 +9,11 @@ spring:
       minimum-idle: 2
       connection-timeout: 30000
 
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+
   kafka:
     consumer:
       group-id: notification-service
