@@ -20,6 +20,8 @@ spring:
           max-active: 10
           max-idle: 5
           min-idle: 1
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://mongoroot:mongopassword@localhost:27017/fintechwave_views?authSource=admin}
 
   kafka:
     consumer:
