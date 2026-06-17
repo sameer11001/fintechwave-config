@@ -87,7 +87,7 @@ management:
 # --------------- Logging (Global Defaults) ------------------
 logging:
   pattern:
-    level: "%5p [${spring.application.name},%X{traceId},%X{spanId}]"
+    level: "%5p [${spring.application.name:-},%X{trace_id:-},%X{span_id:-}]"
   level:
     "[org.springframework.security]": INFO
     "[org.springframework.kafka]": INFO
