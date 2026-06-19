@@ -87,10 +87,12 @@ management:
 # --------------- Logging (Global Defaults) ------------------
 logging:
   pattern:
-    level: "%5p [${spring.application.name:-},%X{trace_id:-},%X{span_id:-}]"
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
   level:
     "[org.springframework.security]": INFO
     "[org.springframework.kafka]": INFO
     "[org.springframework.cloud.config]": INFO
     "[org.springframework.cloud.gateway]": INFO
+    "[org.springframework.web]": DEBUG
+    "[org.springframework.web.filter.CommonsRequestLoggingFilter]": DEBUG
     "[com.fintechwave]": INFO
