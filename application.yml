@@ -65,6 +65,11 @@ spring:
     bus:
       enabled: true
 
+  # --------------- MongoDB Defaults -------------------------
+  data:
+    mongodb:
+      uuid-representation: java-legacy
+
 # --------------- Global Error Policy ------------------------
 server:
   error:
