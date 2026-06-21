@@ -75,6 +75,11 @@ server:
   error:
     include-message: never
     include-stacktrace: never
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: "%h %l %u %t \"%r\" %s %b %D"
+      directory: /dev/stdout
 
 # --------------- Actuator -----------------------------------
 management:
@@ -84,18 +89,29 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, refresh, busrefresh
+        include: health, info, refresh, busrefresh, prometheus, metrics, loggers
   metrics:
     tags:
       application: ${spring.application.name}
+      service: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0  # 100% in dev; set to 0.1 in prod
 
 # --------------- Logging (Global Defaults) ------------------
 logging:
   pattern:
+    console: "%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n"
     level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
   level:
+    root: INFO
+    "org.springframework": WARN
+    "org.hibernate.SQL": WARN
+    "org.apache.kafka": WARN
     "[org.springframework.security]": INFO
-    "[org.springframework.kafka]": INFO
     "[org.springframework.cloud.config]": INFO
     "[org.springframework.cloud.gateway]": INFO
     "[org.springframework.web]": DEBUG
