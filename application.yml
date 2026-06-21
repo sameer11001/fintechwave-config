@@ -79,7 +79,10 @@ server:
     accesslog:
       enabled: true
       pattern: "%h %l %u %t \"%r\" %s %b %D"
-      directory: /dev/stdout
+      directory: /dev
+      prefix: stdout
+      suffix: ""
+      file-date-format: ""
 
 # --------------- Actuator -----------------------------------
 management:
