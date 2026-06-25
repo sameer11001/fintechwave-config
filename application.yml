@@ -12,6 +12,9 @@ app:
 
 # --------------- OAuth2 Resource Server ---------------------
 spring:
+  threads:
+    virtual:
+      enabled: true
   security:
     oauth2:
       resourceserver:
