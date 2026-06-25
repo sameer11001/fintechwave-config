@@ -110,15 +110,12 @@ management:
 # --------------- Logging (Global Defaults) ------------------
 logging:
   pattern:
-    console: "%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n"
-    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}] [%thread] %logger{36} : %msg%n"
   level:
     root: INFO
     "org.springframework": WARN
+    "org.springframework.security": INFO
+    "org.springframework.cloud.gateway": INFO
     "org.hibernate.SQL": WARN
     "org.apache.kafka": WARN
-    "[org.springframework.security]": INFO
-    "[org.springframework.cloud.config]": INFO
-    "[org.springframework.cloud.gateway]": INFO
-    "[org.springframework.web]": INFO
-    "[com.fintechwave]": INFO
+    "com.fintechwave": INFO
