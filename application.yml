@@ -120,6 +120,5 @@ logging:
     "[org.springframework.security]": INFO
     "[org.springframework.cloud.config]": INFO
     "[org.springframework.cloud.gateway]": INFO
-    "[org.springframework.web]": DEBUG
-    "[org.springframework.web.filter.CommonsRequestLoggingFilter]": DEBUG
+    "[org.springframework.web]": INFO
     "[com.fintechwave]": INFO
