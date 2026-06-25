@@ -33,4 +33,4 @@ spring:
 
 logging:
   level:
-    "[com.fintechwave.ledger]": DEBUG
+    "[com.fintechwave.ledger]": INFO

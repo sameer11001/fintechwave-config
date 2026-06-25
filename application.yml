@@ -89,13 +89,18 @@ server:
 
 # --------------- Actuator -----------------------------------
 management:
-  endpoint:
-    health:
-      show-details: always
   endpoints:
     web:
       exposure:
-        include: health, info, refresh, busrefresh, prometheus, metrics, loggers
+        include: health, info, prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+    prometheus:
+      access: read-only
+  # Protect all actuator endpoints except /health
+  security:
+    enabled: true
   metrics:
     tags:
       application: ${spring.application.name}

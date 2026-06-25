@@ -40,4 +40,4 @@ grpc:
 
 logging:
   level:
-    "[com.fintechwave.transaction]": DEBUG
+    "[com.fintechwave.transaction]": INFO

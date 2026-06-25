@@ -42,5 +42,4 @@ app:
 
 logging:
   level:
-    "[com.fintechwave.fraud]": DEBUG
-    "[org.springframework.data.redis]": INFO
+    "[com.fintechwave.fraud]": INFO

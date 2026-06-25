@@ -37,4 +37,4 @@ app:
 
 logging:
   level:
-    "[com.fintechwave.iam]": DEBUG
+    "[com.fintechwave.iam]": INFO

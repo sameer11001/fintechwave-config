@@ -44,5 +44,5 @@ management:
 
 logging:
   level:
-    "[com.fintechwave.notification]": DEBUG
+    "[com.fintechwave.notification]": INFO
     "[org.springframework.mail]": INFO

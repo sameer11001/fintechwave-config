@@ -40,4 +40,4 @@ app:
 
 logging:
   level:
-    "[com.fintechwave.kyc]": DEBUG
+    "[com.fintechwave.kyc]": INFO

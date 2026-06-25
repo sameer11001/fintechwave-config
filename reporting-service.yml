@@ -26,4 +26,4 @@ spring:
 
 logging:
   level:
-    "[com.fintechwave.reporting]": DEBUG
+    "[com.fintechwave.reporting]": INFO
