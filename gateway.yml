@@ -81,6 +81,6 @@ resilience4j:
 
 logging:
   level:
-    "[com.fintechwave.gateway]": DEBUG
-    "[org.springframework.cloud.gateway]": TRACE
-    "[reactor.netty.http.server]": DEBUG
+    "[com.fintechwave.gateway]": INFO
+    "[org.springframework.cloud.gateway]": INFO
+    "[reactor.netty.http.server]": INFO
