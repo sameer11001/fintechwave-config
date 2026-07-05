@@ -1,7 +1,4 @@
-# ============================================================
 # SHARED — served to every microservice.
-# Do NOT put service-specific values here.
-# ============================================================
 
 # --------------- Keycloak (Platform-Wide) -------------------
 app:
@@ -32,6 +29,9 @@ spring:
       retries: 3
       properties:
         enable.idempotence: true
+        delivery.timeout.ms: 10000
+        request.timeout.ms: 5000
+        retry.backoff.ms: 500
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -62,6 +62,11 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: "${DB_USER:postgres}"
     password: "${DB_PASS:postgres}"
+    hikari:
+      maximum-pool-size: 20
+      connection-timeout: 3000
+      idle-timeout: 600000
+      max-lifetime: 1800000
 
   # --------------- Cloud Bus (Kafka) ------------------------
   cloud:
@@ -81,7 +86,7 @@ server:
   tomcat:
     accesslog:
       enabled: true
-      pattern: "%h %l %u %t \"%r\" %s %b %D"
+      pattern: '%h %l %u %t "%r" %s %b %D'
       directory: /dev
       prefix: stdout
       suffix: ""
@@ -110,7 +115,7 @@ management:
         enabled: true
   tracing:
     sampling:
-      probability: 1.0  # 100% in dev; set to 0.1 in prod
+      probability: 1.0 # 100% in dev; set to 0.1 in prod
 
 # --------------- Logging (Global Defaults) ------------------
 logging:

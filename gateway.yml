@@ -72,12 +72,41 @@ info:
 
 resilience4j:
   circuitbreaker:
+    metrics:
+      enabled: true
     configs:
       default:
         slidingWindowSize: 10
         permittedNumberOfCallsInHalfOpenState: 2
         failureRateThreshold: 50
         waitDurationInOpenState: 10000
+    instances:
+      transactionCircuitBreaker:
+        failureRateThreshold: 50
+        slowCallRateThreshold: 80
+        slowCallDurationThreshold: 3s
+        waitDurationInOpenState: 30s
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+      ledgerCircuitBreaker:
+        failureRateThreshold: 50
+        slowCallRateThreshold: 80
+        slowCallDurationThreshold: 3s
+        waitDurationInOpenState: 30s
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+      reportingCircuitBreaker:
+        failureRateThreshold: 60
+        waitDurationInOpenState: 20s
+        slidingWindowSize: 20
+  timelimiter:
+    instances:
+      transactionCircuitBreaker:
+        timeoutDuration: 4s
+      ledgerCircuitBreaker:
+        timeoutDuration: 4s
+      reportingCircuitBreaker:
+        timeoutDuration: 15s
 
 logging:
   level:

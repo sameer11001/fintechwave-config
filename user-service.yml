@@ -7,8 +7,9 @@ spring:
     hikari:
       maximum-pool-size: 20
       minimum-idle: 5
-      connection-timeout: 30000
+      connection-timeout: 3000
       idle-timeout: 600000
+      max-lifetime: 1800000
   
   data:
     redis:
@@ -26,6 +27,11 @@ spring:
   kafka:
     consumer:
       group-id: user-service
+    producer:
+      properties:
+        delivery.timeout.ms: 10000
+        request.timeout.ms: 5000
+        retry.backoff.ms: 500
 
 app:
   keycloak:
